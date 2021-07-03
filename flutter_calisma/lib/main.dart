@@ -63,12 +63,10 @@ sayiBol(){
    sonuc = sayi1 - sayi2;
   });
 }
-
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.all(50),
       child: Center(
         child: Column(
           children: <Widget>[
@@ -79,10 +77,19 @@ sayiBol(){
             TextField(
               controller: t2,
             ),
+           Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget> [
+           
             ElevatedButton(onPressed: sayiTopla, child: Text("Topla")),
             ElevatedButton(onPressed: sayiCikar, child: Text("Çıkar")),
             ElevatedButton(onPressed: sayiCarp, child: Text("Çarp")),
             ElevatedButton(onPressed: sayiBol, child: Text("Böl")),
+
+           ],
+
+           )
+           
           ],
         ),
       ),
