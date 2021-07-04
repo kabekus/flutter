@@ -6,7 +6,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Hesap Makinesi",
+      title: "ToDo List",
       home: Iskele(),
     );
   }
@@ -17,7 +17,7 @@ class Iskele extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hesap Makinesi"),
+        title: Text("Yapılacaklar"),
       ),
       body: AnaEkran(),
     );
@@ -30,39 +30,22 @@ class AnaEkran extends StatefulWidget {
 }
 
 class _AnaEkranState extends State<AnaEkran> {
-  num sayi1, sayi2, sonuc;
+TextEditingController t1 =TextEditingController();
+List yapilacaklarListesi=[];
 
-  TextEditingController t1 =TextEditingController();
-  TextEditingController t2 =TextEditingController();
- 
-sayiDonustur(){
-sayi1=num.parse(t1.text);
-sayi2=num.parse(t2.text);
+listeyeEkle(){
+setState(() {
+  yapilacaklarListesi.add(t1.text);
+  t1.clear();
+});
 }
-sayiTopla(){
+
+listedenSil(){
   setState(() {
-  sayiDonustur();
-   sonuc = sayi1 + sayi2;
+    yapilacaklarListesi.remove(t1.text);
   });
 }
-sayiCikar(){
-  setState(() {
-   sayiDonustur();
-   sonuc = sayi1 - sayi2;
-  });
-}
-sayiCarp(){
-  setState(() {
-   sayiDonustur();
-   sonuc = sayi1 - sayi2;
-  });
-}
-sayiBol(){
-  setState(() {
-   sayiDonustur();
-   sonuc = sayi1 - sayi2;
-  });
-}
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -70,29 +53,24 @@ sayiBol(){
       child: Center(
         child: Column(
           children: <Widget>[
-            Text("$sonuc"),
-            TextField(
-              controller: t1,
-            ),
-            TextField(
-              controller: t2,
-            ),
-           Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget> [
-           
-            ElevatedButton(onPressed: sayiTopla, child: Text("Topla")),
-            ElevatedButton(onPressed: sayiCikar, child: Text("Çıkar")),
-            ElevatedButton(onPressed: sayiCarp, child: Text("Çarp")),
-            ElevatedButton(onPressed: sayiBol, child: Text("Böl")),
-
+          Flexible(child:ListView.builder(
+            itemCount: yapilacaklarListesi.length ,
+            itemBuilder: (context,indeksNo)=> ListTile(
+            title: Text(yapilacaklarListesi[indeksNo]),
+          ),
+          ),
+          ),
+          TextField(controller: t1,),
+           ElevatedButton(onPressed: listeyeEkle, child:Text('Ekleme Yap'),
+           ),
+           ElevatedButton(onPressed: listedenSil, child:Text('sil'),
+           ),
            ],
 
            )
            
-          ],
         ),
-      ),
+      
     );
   }
 }
