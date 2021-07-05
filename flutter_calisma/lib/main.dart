@@ -21,8 +21,16 @@ class MyApp extends StatelessWidget {
  
  class _GirisEkraniState extends State<GirisEkrani> {
   
+  TextEditingController txt1 =TextEditingController();
+  TextEditingController txt2 = TextEditingController();
   girisButon(){
-    Navigator.pushNamed(context, "/ProfilSayfasi");
+    Navigator.pushNamed(
+      context, "/ProfilSayfasi", 
+      arguments: VeriModeli(
+        kullaniciAdi: txt1.text,
+        sifre: txt2.text
+      ));
+
   }
 
    @override
@@ -32,6 +40,8 @@ class MyApp extends StatelessWidget {
        body: Container(
          child: Column(
            children: <Widget> [
+             TextFormField(controller:txt1),
+             TextFormField(controller:txt2 ,),
              ElevatedButton(onPressed: girisButon, child:Text("Giriş Yap"))
            ],
          ),
@@ -46,11 +56,34 @@ class MyApp extends StatelessWidget {
  }
  
  class _ProfilSayfasiState extends State<ProfilSayfasi> {
+    anaSayfa(){
+    Navigator.pushNamed(
+      context, "/", 
+    );
+
+  }
    @override
    Widget build(BuildContext context) {
+
+     VeriModeli iletilenArgumanlar= ModalRoute.of(context).settings.arguments;
+
      return Scaffold(
-       appBar: AppBar(title: Text("Profilim"),),
+       appBar: AppBar(title: Text("Profilim"),
+       ),
+       body: Container(
+         child: Column (
+           children: <Widget> [
+            ElevatedButton(onPressed: anaSayfa, child:Text("Ana Sayfaya Dön")),
+            Text(iletilenArgumanlar.kullaniciAdi),
+            Text(iletilenArgumanlar.sifre)
+           ],
+         ),
+       ),
      );
    }
  }
 
+ class VeriModeli {
+   String kullaniciAdi , sifre;
+   VeriModeli({this.kullaniciAdi, this.sifre});
+ }
